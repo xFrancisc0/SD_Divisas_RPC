@@ -4,6 +4,6 @@ struct EstructuraDatos{
 	float flotante;
 	double doble;
 	char caracter;
-	int vector_de_enteros<>;
-	string str<>;
+	int vector_de_enteros[10];
+	string str[1000];
 };
