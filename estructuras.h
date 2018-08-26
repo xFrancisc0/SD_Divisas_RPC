@@ -5,5 +5,5 @@ struct EstructuraDatos{
 	double doble;
 	char caracter;
 	int vector_de_enteros[10];
-	string str[1000];
+	string str<>;
 };
