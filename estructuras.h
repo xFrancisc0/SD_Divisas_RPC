@@ -1,4 +1,4 @@
-struct Datosentrada{
+struct EstructuraDatos{
 	int opcion;
 	int entero;
 	float flotante;
@@ -6,4 +6,4 @@ struct Datosentrada{
 	char caracter;
 	int vector_de_enteros<>;
 	string str<>;
-}
+};
