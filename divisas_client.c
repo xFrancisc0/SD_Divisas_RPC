@@ -34,26 +34,56 @@ divisas_1(char *host, char op)
 	}
 #endif	/* DEBUG */
 
+
+
+
+
 //Dependiendo de la opcion elegida en el menu, se elegira un servicio determinado.
 
+// Si la opcion elegida es 1, se crearan las siguientes variables.
 
-int i;
+
 switch(op){
     
 
     // Modulo de compras
 	case '1':
-
 	comprar_divisas_1_arg.str = strdup("1"); // Le paso el valor de 1 al *str . (COn strdup se pasan valores a char *str (en lugar de strcmpy que sirve para str[]))
 	
-	result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt);
+	result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Recibo el string result_1 correspondiente a la entrada de *str = 1.
 	if (result_1 == (char **) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
+
 	char str2[1000];
+	char opcion1_origen, opcion1_salida;
+	int i;
 	sprintf(str2,"%s", (char *) *result_1);
+
+	do{
+	system(CLEAR);
+	printf("Usted ha elegido la opcion de comprar divisas\n");
+	printf("================================\nEl usuario actualmente posee\n\n");
 	printf("%s", str2);
-	scanf("%i", &i);
+	printf("================================\n");
+	printf("OPCIONES\n\n1)CLP\n2)USD\n3)EUR\n9)Volver\n===================\nSeleccione una opcion que represente la moneda a comprar:\n");
+	fflush(stdin);
+	scanf("%c",&opcion1_origen);
+
+		switch(opcion1_origen){
+			case '1':
+			break;
+			case '2':
+			break;
+			case '3':
+			break;
+			default:
+			break;	
+		}
+
+	}while(opcion1_origen!='9');
+
+
 //	strcpy(str2,*resultado);
 //	printf("================================\nEl usuario actualmente posee\n");
 //	printf("%s", str2);
@@ -72,6 +102,10 @@ switch(op){
 //	if (result_4 == (char **) NULL) {
 //		clnt_perror (clnt, "call failed");
 //	}
+
+	case 5:
+
+	break;
 
 	default:
 
@@ -99,7 +133,7 @@ main (int argc, char *argv[])
 	host = argv[1];
 
 //Desde aqui empieza la ejecucion del client en si.
-char opcion;
+	char opcion;
 do{ system(CLEAR);
 	printf("MENU\n");
 	printf("==================\n");
@@ -113,6 +147,9 @@ do{ system(CLEAR);
 	fflush(stdin);
 	scanf("%c",&opcion);
 
+	if(opcion=='5'){ //Si quiero salir del programa
+		break;       //Hago break al do-while y salgo del programa
+	}
 //Se ejecutara el modulo divisas_1 que contiene los 4 servicios de este sistema.
 	divisas_1 (host, opcion);
 }while(opcion!='9');

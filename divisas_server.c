@@ -26,19 +26,21 @@ comprar_divisas_1_svc(struct EstructuraDatos *argp, struct svc_req *rqstp)
     entidad dinero_servidor[3];  //Creo un vector que me almacene los datos de dinero del servidor
 	entidad dinero_usuario[3];	 //Creo un vector que me almacene los datos de dinero del usuario
 
-//	FILE * f=fopen("./datos/usuario.txt","a+");
-//	FILE * f2=fopen("./datos/sistema.txt","a+");	
-//	rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
-//	rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
+	FILE * f=fopen("./datos/usuario.txt","a+");
+	FILE * f2=fopen("./datos/sistema.txt","a+");	
+	rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
+	rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
 
-//	int i;
-//	char resultado[1000];
+	int i;
+	char resultado[1000], resultado2[100];
 	
-//	for(i=0;i<3;i++){
-//	sprintf(resultado, "%s %s\n", dinero_usuario[i].tipo_moneda, dinero_usuario[i].cantidad);	
-//	}
+	for(i=0;i<3;i++){
+	sprintf(resultado2, "%s %s", dinero_usuario[i].tipo_moneda, dinero_usuario[i].cantidad);	
+	strcat(resultado, resultado2);
+	strcat(resultado, "\n");
+	}
 
-	result = strdup("asdf");
+	result = strdup(resultado);
 	return &result;
 	}
 
