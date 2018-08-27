@@ -48,46 +48,241 @@ switch(op){
 
     // Modulo de compras
 	case '1':
-	comprar_divisas_1_arg.str = strdup("1"); // Le paso el valor de 1 al *str . (COn strdup se pasan valores a char *str (en lugar de strcmpy que sirve para str[]))
+
+	//Si no mando str al server me genera error, solo por eso lo envio. Cuando realmente envie str sera cuando tenga que enviar multiples datos al server.
+	comprar_divisas_1_arg.str = strdup("Cualquier Valor"); // Le paso el valor de 1 al *str . (COn strdup se pasan valores a char *str (en lugar de strcmpy que sirve para str[]))
 	
-	result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Recibo el string result_1 correspondiente a la entrada de *str = 1.
+	comprar_divisas_1_arg.caracter = '1'; //El que realmente envio es el caracter
+
+	result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Desplego datos al usuario.
 	if (result_1 == (char **) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
 
-	char str2[1000];
-	char opcion1_origen, opcion1_salida;
-	int i;
-	sprintf(str2,"%s", (char *) *result_1);
+	char straux[1000];
+	char opcion_origen, opcion_salida;
+	int i, opcion_cantidad;
+	sprintf(straux,"%s", (char *) *result_1);
 
 	do{
 	system(CLEAR);
 	printf("Usted ha elegido la opcion de comprar divisas\n");
 	printf("================================\nEl usuario actualmente posee\n\n");
-	printf("%s", str2);
+	printf("%s", straux);
 	printf("================================\n");
 	printf("OPCIONES\n\n1)CLP\n2)USD\n3)EUR\n9)Volver\n===================\nSeleccione una opcion que represente la moneda a comprar:\n");
 	fflush(stdin);
-	scanf("%c",&opcion1_origen);
+	scanf("%c",&opcion_origen);
 
-		switch(opcion1_origen){
+
+		switch(opcion_origen){
 			case '1':
+				do{
+				printf("Ingrese el monto a comprar:");
+				fflush(stdin);
+				scanf("%i",&opcion_cantidad);	
+				printf("\n");
+				}while(opcion_cantidad<0);
+				do{
+					printf("===================\n");
+					printf("OPCIONES\n\n2)USD\n3)EUR\n9)Volver\n===================\nSeleccione moneda con la que pagara: ");
+					fflush(stdin);
+					scanf("%c",&opcion_salida);
+					
+						switch(opcion_salida){
+						
+						case '2':
+
+						comprar_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.		
+
+						sprintf(straux, "CLP-USD-%i", opcion_cantidad);
+						comprar_divisas_1_arg.str = strdup(straux); // Enviare multiples datos al server		
+
+						result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Realizo la compra.
+						if (result_1 == (char **) NULL) {
+							clnt_perror (clnt, "call failed");
+						}
+						sprintf(straux,"%s", (char *) *result_1);
+						printf("%s", straux);                       // Mostrar en pantalla la compra realizada
+						scanf("%i", &i);    
+
+							opcion_salida='9';
+							opcion_origen='9';
+
+						break;
+
+						case '3':
+						comprar_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.		
+
+						sprintf(straux, "CLP-EUR-%i", opcion_cantidad);
+						comprar_divisas_1_arg.str = strdup(straux); // Enviare multiples datos al server		
+
+						result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Realizo la compra.
+						if (result_1 == (char **) NULL) {
+							clnt_perror (clnt, "call failed");
+						}
+						sprintf(straux,"%s", (char *) *result_1);
+						printf("%s", straux);                       // Mostrar en pantalla la compra realizada
+						scanf("%i", &i);    
+
+							opcion_salida='9';
+							opcion_origen='9';	
+						break;
+						
+						case '9':
+							opcion_salida='9';
+						break;
+						default:
+							printf("La opcion %c no es valida.\n\n", opcion_salida);
+						break;		
+						}
+
+				}while(opcion_salida!='9');
+				system(CLEAR);
 			break;
+
 			case '2':
+			do{
+				printf("Ingrese el monto a comprar:");
+				fflush(stdin);
+				scanf("%i",&opcion_cantidad);	
+				printf("\n");
+				}while(opcion_cantidad<0);
+				do{
+					printf("===================\n");
+					printf("OPCIONES\n\n1)CLP\n3)EUR\n9)Volver\n===================\nSeleccione moneda con la que pagara: ");
+					fflush(stdin);
+					scanf("%c",&opcion_salida);
+					
+						switch(opcion_salida){
+						
+						case '1':
+
+						comprar_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.		
+
+						sprintf(straux, "USD-CLP-%i", opcion_cantidad);
+						comprar_divisas_1_arg.str = strdup(straux); // Enviare multiples datos al server		
+
+						result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Realizo la compra.
+						if (result_1 == (char **) NULL) {
+							clnt_perror (clnt, "call failed");
+						}
+						sprintf(straux,"%s", (char *) *result_1);
+						printf("%s", straux);                       // Mostrar en pantalla la compra realizada
+						scanf("%i", &i);    
+
+							opcion_salida='9';
+							opcion_origen='9';
+
+						break;
+
+						case '3':
+						comprar_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.		
+
+						sprintf(straux, "USD-EUR-%i", opcion_cantidad);
+						comprar_divisas_1_arg.str = strdup(straux); // Enviare multiples datos al server		
+
+						result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Realizo la compra.
+						if (result_1 == (char **) NULL) {
+							clnt_perror (clnt, "call failed");
+						}
+						sprintf(straux,"%s", (char *) *result_1);
+						printf("%s", straux);                       // Mostrar en pantalla la compra realizada
+						scanf("%i", &i);    
+
+							opcion_salida='9';
+							opcion_origen='9';	
+						break;
+						
+						case '9':
+							opcion_salida='9';
+						break;
+
+						default:
+							printf("La opcion %c no es valida.\n\n", opcion_salida);
+						break;		
+						}
+
+				}while(opcion_salida!='9');
+				system(CLEAR);
 			break;
 			case '3':
+				do{
+				printf("Ingrese el monto a comprar:");
+				fflush(stdin);
+				scanf("%i",&opcion_cantidad);	
+				printf("\n");
+				}while(opcion_cantidad<0);
+				do{
+					printf("===================\n");
+					printf("OPCIONES\n\n1)CLP\n2)USD\n9)Volver\n===================\nSeleccione moneda con la que pagara: ");
+					fflush(stdin);
+					scanf("%c",&opcion_salida);
+					
+						switch(opcion_salida){
+						
+						case '1':
+
+						comprar_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.		
+
+						sprintf(straux, "EUR-CLP-%i", opcion_cantidad);
+						comprar_divisas_1_arg.str = strdup(straux); // Enviare multiples datos al server		
+
+						result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Realizo la compra.
+						if (result_1 == (char **) NULL) {
+							clnt_perror (clnt, "call failed");
+						}
+						sprintf(straux,"%s", (char *) *result_1);
+						printf("%s", straux);                       // Mostrar en pantalla la compra realizada
+						scanf("%i", &i);    
+
+							opcion_salida='9';
+							opcion_origen='9';
+
+						break;
+
+						case '2':
+						comprar_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.		
+
+						sprintf(straux, "EUR-USD-%i", opcion_cantidad);
+						comprar_divisas_1_arg.str = strdup(straux); // Enviare multiples datos al server		
+
+						result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt); //Realizo la compra.
+						if (result_1 == (char **) NULL) {
+							clnt_perror (clnt, "call failed");
+						}
+						sprintf(straux,"%s", (char *) *result_1);
+						printf("%s", straux);                       // Mostrar en pantalla la compra realizada
+						scanf("%i", &i);    
+
+							opcion_salida='9';
+							opcion_origen='9';	
+						break;
+						
+						case '9':
+							opcion_salida='9';
+						break;
+
+						default:
+							printf("La opcion %c no es valida.\n\n", opcion_salida);
+						break;		
+						}
+
+				}while(opcion_salida!='9');
+				system(CLEAR);
 			break;
+
+			case '9':
+				opcion_origen='9';
+			break;
+
 			default:
+			
 			break;	
 		}
 
-	}while(opcion1_origen!='9');
+	}while(opcion_origen!='9');
 
-
-//	strcpy(str2,*resultado);
-//	printf("================================\nEl usuario actualmente posee\n");
-//	printf("%s", str2);
-//	scanf("%i", &i);
 	break;
 
 //	result_2 = vender_divisas_1(&vender_divisas_1_arg, clnt);
