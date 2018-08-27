@@ -11,9 +11,9 @@
 #include "funciones_client.h"
 
 void
-divisas_1(char *host)
+divisas_1(char *host, char op)
 {
-	system(CLEAR);
+	//system(CLEAR);
 	CLIENT *clnt;
 	char * *result_1;
 	struct EstructuraDatos  comprar_divisas_1_arg;
@@ -24,6 +24,8 @@ divisas_1(char *host)
 	char * *result_4;
 	struct EstructuraDatos  buscar_info_divisa_1_arg;
 
+	char * *resultado;
+
 #ifndef	DEBUG
 	clnt = clnt_create (host, DIVISAS, DIVISAS_VER, "udp");
 	if (clnt == NULL) {
@@ -32,10 +34,32 @@ divisas_1(char *host)
 	}
 #endif	/* DEBUG */
 
-//	result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt);
-//	if (result_1 == (char **) NULL) {
-//		clnt_perror (clnt, "call failed");
-//	}
+//Dependiendo de la opcion elegida en el menu, se elegira un servicio determinado.
+
+
+int i;
+switch(op){
+    
+
+    // Modulo de compras
+	case '1':
+
+	comprar_divisas_1_arg.str = strdup("1"); // Le paso el valor de 1 al *str . (COn strdup se pasan valores a char *str (en lugar de strcmpy que sirve para str[]))
+	
+	result_1 = comprar_divisas_1(&comprar_divisas_1_arg, clnt);
+	if (result_1 == (char **) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	char str2[1000];
+	sprintf(str2,"%s", (char *) *result_1);
+	printf("%s", str2);
+	scanf("%i", &i);
+//	strcpy(str2,*resultado);
+//	printf("================================\nEl usuario actualmente posee\n");
+//	printf("%s", str2);
+//	scanf("%i", &i);
+	break;
+
 //	result_2 = vender_divisas_1(&vender_divisas_1_arg, clnt);
 //	if (result_2 == (char **) NULL) {
 //		clnt_perror (clnt, "call failed");
@@ -48,10 +72,19 @@ divisas_1(char *host)
 //	if (result_4 == (char **) NULL) {
 //		clnt_perror (clnt, "call failed");
 //	}
+
+	default:
+
+	break;
+}
+
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
 }
+
+
+
 
 
 int
@@ -65,6 +98,7 @@ main (int argc, char *argv[])
 	}
 	host = argv[1];
 
+//Desde aqui empieza la ejecucion del client en si.
 char opcion;
 do{ system(CLEAR);
 	printf("MENU\n");
@@ -79,7 +113,8 @@ do{ system(CLEAR);
 	fflush(stdin);
 	scanf("%c",&opcion);
 
-	divisas_1 (host);
+//Se ejecutara el modulo divisas_1 que contiene los 4 servicios de este sistema.
+	divisas_1 (host, opcion);
 }while(opcion!='9');
 
 

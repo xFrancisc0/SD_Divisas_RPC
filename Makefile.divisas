@@ -12,7 +12,7 @@ SOURCES_SVC.c =
 SOURCES_SVC.h = 
 SOURCES.x = divisas.x
 
-TARGETS_SVC.c = divisas_svc.c divisas_server.c divisas_xdr.c 
+TARGETS_SVC.c = divisas_svc.c divisas_server.c divisas_xdr.c funciones_server.h
 TARGETS_CLNT.c = divisas_clnt.c divisas_client.c divisas_xdr.c funciones_client.h
 TARGETS = divisas.h divisas_xdr.c divisas_clnt.c divisas_svc.c divisas_client.c divisas_server.c
 
