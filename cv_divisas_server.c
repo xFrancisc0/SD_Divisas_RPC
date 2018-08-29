@@ -5,102 +5,78 @@
  */
 
 #include "cv_divisas.h"
+#include "funciones_server.h"
 
-int *
+char **
 compra_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
-	static int  result;
+	static char * result;
 
-	FILE * conversor = fopen("./datos/conversion.txt","a+");
-	FILE * f= fopen("./datos/usuario.txt","a+");
-	FILE * f2 = fopen("./datos/sistema.txt","a+");
+	char str[3], resultado[1000], resultado2[100];
+	int i;
 
-	int i=0,j=0,i_aux=0, j_aux=0, l, cantidad_usuario_cambio, cantidad_usuario_origen, cantidad_sistema,cantidad_sistema_pago,tipo_cambio_aux ;
-	char tipo_aux[4],tipo_aux2[4],tasa_cambio[15];
-	float conversion;
-	while(strcmp(argp->user[i].tipo_moneda, argp->moneda_pago)!=0){
-		i++;	
+	sprintf(str,"%c",argp->caracter);
+
+	if(strcmp(str,"1")==0){
+
+    //Inicialmente debo rescatar los datos del usuario y del server.
+    entidad dinero_servidor[3];  //Creo un vector que me almacene los datos de dinero del servidor
+	entidad dinero_usuario[3];	 //Creo un vector que me almacene los datos de dinero del usuario
+
+	FILE * f=fopen("./datos/usuario.txt","a+");
+	FILE * f2=fopen("./datos/sistema.txt","a+");	
+	rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
+	rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
+
+	
+	for(i=0;i<3;i++){
+	sprintf(resultado2, "%s %s", dinero_usuario[i].tipo_moneda, dinero_usuario[i].cantidad);	
+	strcat(resultado, resultado2);
+	strcat(resultado, "\n");
 	}
-	while(strcmp(argp->sistem[j].tipo_moneda, argp->moneda_compra)!=0){
-		j++;
-	}
-	if(argp->cantidad>=atoi(argp->user[i].cantidad)){
-		printf("Usted dispone de %s de la moneda %s\n", argp->user[i].cantidad,argp->user[i].tipo_moneda);
-	}else{
-		
-		if(conversion>=atoi(argp->sistem[j].cantidad)){
-			printf("Nuestro sistema no dispone de %f de la moneda %s\n",conversion,argp->sistem[j].tipo_moneda);
-		}else{
-				while(fscanf(conversor,"%s %s %s",tipo_aux,tipo_aux2,tasa_cambio)!=EOF){
-					
-						if(strcmp(tipo_aux2,argp->moneda_pago)==0 && strcmp(tipo_aux,argp->moneda_compra)==0){
-							printf(" %s==%s && %s==%s\n",tipo_aux2,argp->moneda_pago,tipo_aux,argp->moneda_compra);
-							break;
-						}
-						strcpy(tipo_aux,"");
-				}
-				fclose(conversor);
-			//	printf("tasa cambio %f\n",atof(tasa_cambio));
-				conversion=argp->cantidad*atof(tasa_cambio);
-				cantidad_usuario_cambio = atoi(argp->user[j].cantidad)+argp->cantidad;
-				cantidad_usuario_origen = atoi(argp->user[i].cantidad)-conversion;
-				cantidad_sistema = atoi(argp->sistem[j].cantidad)-argp->cantidad;
-				cantidad_sistema_pago = atoi(argp->sistem[i].cantidad)+conversion;
-				//system("cls");
-				printf("Ahora se posee\nUsuario = %i %s\nUsuario = %i %s\nSistema= %i %s\nSistema= %i %s\n",cantidad_usuario_cambio, argp->moneda_compra, cantidad_usuario_origen,argp->moneda_pago, cantidad_sistema,argp->moneda_compra,cantidad_sistema_pago,argp->moneda_pago);
-				//system("pause");
-				//system("cls");
-			}
-			//printf("i=%i J=%i\n\n",i,j);
-			fclose(f);
-			fclose(f2);
-			if(remove("./datos/usuario.txt")==0 && remove("./datos/sistema.txt")==0){
-			
-			FILE * nuevo_cliente=fopen("./datos/usuario.txt","a+");
-			FILE * nuevo_servidor=fopen("./datos/sistema.txt","a+");
-			for(l=0;l<3;l++){
-				if(l==j){
-					fprintf(nuevo_cliente,"%s %i\n",argp->user[l].tipo_moneda,cantidad_usuario_cambio);
-					fprintf(nuevo_servidor,"%s %i\n",argp->sistem[l].tipo_moneda,cantidad_sistema);
-				
-				}else{
-					if(l==i){
-						fprintf(nuevo_cliente,"%s %i\n",argp->user[l].tipo_moneda,cantidad_usuario_origen);
-						fprintf(nuevo_servidor,"%s %i\n",argp->sistem[l].tipo_moneda,cantidad_sistema_pago);
-						
-					}else{
-					
-					fprintf(nuevo_cliente,"%s %s\n",argp->user[l].tipo_moneda,argp->user[l].cantidad);
-					fprintf(nuevo_servidor,"%s %s\n",argp->sistem[l].tipo_moneda,argp->sistem[l].cantidad);
-				
-				}
-				
-			}
-		}
-			fclose(nuevo_cliente);
-			fclose(nuevo_servidor);
-		}
-		}			
-		return 0;
-		
 
+	result = strdup(resultado);
 	return &result;
+	}
+
+
+
+	if(strcmp(str,"2")==0){
+
+    //Inicialmente debo rescatar los datos del usuario y del server.
+    entidad dinero_servidor[3];  //Creo un vector que me almacene los datos de dinero del servidor
+	entidad dinero_usuario[3];	 //Creo un vector que me almacene los datos de dinero del usuario
+	char moneda_compra[4], moneda_pago[4], str[20];
+	char * *result_1;
+	char resultado[1000];
+	int cantidad;
+	char *v1, *v2, *v3;
+
+	FILE * f=fopen("./datos/usuario.txt","a+");
+	FILE * f2=fopen("./datos/sistema.txt","a+");	
+	rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
+	rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
+
+	sprintf(str,"%s",argp->str);         //Recupero el string que envie al server
+	v1 = strtok(str, "-");
+	v2 = strtok(NULL,"-");
+	v3 = strtok(NULL,"-");
+
+	result_1 = div_comprar(dinero_servidor,dinero_usuario,v1,v2,atoi(v3),f,f2);
+
+	sprintf(resultado,"%s", (char *) *result_1);
+	
+	result = resultado;
+	return &result;
+	}
+
+
+
+return &result;
 }
 
-int *
+char **
 venta_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
-{
-	static int  result;
-
-	/*
-	 * insert server code here
-	 */
-
-	return &result;
-}
-
-void *
-listar_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
@@ -108,10 +84,40 @@ listar_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 	 * insert server code here
 	 */
 
-	return (void *) &result;
+	return &result;
 }
 
-void *
+char **
+listar_divisas_1_svc(int *argp, struct svc_req *rqstp)
+{
+	//recibe la opcion que puede ser 1,2 o 3
+	
+	static char * result;
+	char ** resultado;
+	int a=*argp;
+	printf("%i\n",a);
+	if(a==1){		//con 1 listaremos los datos del usuario con la funcion listar_datos_usuario
+		resultado=listar_datos_usuario();
+		printf("1------>%i\n",a);
+	}else{
+		if(a==2){//con 2 listaremos los datos del sistema con la funcion listar_datos_sistema
+			resultado=listar_datos_sistema();
+			printf("2------>%i\n",a);
+		}else{
+			if(a==3){// con 3 llistaremos los cambios de divisas con la funcion imprime_datos_conversion
+				resultado=imprime_datos_conversion();
+				printf("3-------->%i\n",a);
+			}else{
+				//strcpy(resultado,"Vuelva a intentarlo!!!\n");
+			}
+		}
+	}
+	
+	result = *resultado;
+	return &result;
+}
+
+char **
 listardetalles_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
@@ -120,5 +126,5 @@ listardetalles_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 	 * insert server code here
 	 */
 
-	return (void *) &result;
+	return &result;
 }

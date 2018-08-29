@@ -22,7 +22,7 @@ cv_divisas_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	union {
 		struct CompraVenta compra_divisas_1_arg;
 		struct CompraVenta venta_divisas_1_arg;
-		struct CompraVenta listar_divisas_1_arg;
+		int listar_divisas_1_arg;
 		struct CompraVenta listardetalles_divisas_1_arg;
 	} argument;
 	char *result;
@@ -36,25 +36,25 @@ cv_divisas_1(struct svc_req *rqstp, register SVCXPRT *transp)
 
 	case compra_divisas:
 		_xdr_argument = (xdrproc_t) xdr_CompraVenta;
-		_xdr_result = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_wrapstring;
 		local = (char *(*)(char *, struct svc_req *)) compra_divisas_1_svc;
 		break;
 
 	case venta_divisas:
 		_xdr_argument = (xdrproc_t) xdr_CompraVenta;
-		_xdr_result = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_wrapstring;
 		local = (char *(*)(char *, struct svc_req *)) venta_divisas_1_svc;
 		break;
 
 	case listar_divisas:
-		_xdr_argument = (xdrproc_t) xdr_CompraVenta;
-		_xdr_result = (xdrproc_t) xdr_void;
+		_xdr_argument = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_wrapstring;
 		local = (char *(*)(char *, struct svc_req *)) listar_divisas_1_svc;
 		break;
 
 	case listardetalles_divisas:
 		_xdr_argument = (xdrproc_t) xdr_CompraVenta;
-		_xdr_result = (xdrproc_t) xdr_void;
+		_xdr_result = (xdrproc_t) xdr_wrapstring;
 		local = (char *(*)(char *, struct svc_req *)) listardetalles_divisas_1_svc;
 		break;
 

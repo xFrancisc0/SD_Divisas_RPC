@@ -1,13 +1,10 @@
-struct entidad{
-	char tipo_moneda[4];
-	char cantidad[12];
-};
 
 struct CompraVenta{
-	struct entidad * sistem;
-	struct entidad * user;
-	char  moneda_compra[4];
-	char  moneda_pago[4];
-	int cantidad;
-
+	int opcion;
+	int entero;
+	float flotante;
+	double doble;
+	char caracter;
+	int vector_de_enteros[10];
+	string str<>;
 };

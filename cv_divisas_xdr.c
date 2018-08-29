@@ -6,37 +6,88 @@
 #include "cv_divisas.h"
 
 bool_t
-xdr_entidad (XDR *xdrs, entidad *objp)
-{
-	register int32_t *buf;
-
-	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->tipo_moneda, 4,
-		sizeof (char), (xdrproc_t) xdr_char))
-		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->cantidad, 12,
-		sizeof (char), (xdrproc_t) xdr_char))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t
 xdr_CompraVenta (XDR *xdrs, CompraVenta *objp)
 {
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_pointer (xdrs, (char **)&objp->sistem, sizeof (entidad), (xdrproc_t) xdr_entidad))
+
+	if (xdrs->x_op == XDR_ENCODE) {
+		 if (!xdr_int (xdrs, &objp->opcion))
+			 return FALSE;
+		 if (!xdr_int (xdrs, &objp->entero))
+			 return FALSE;
+		 if (!xdr_float (xdrs, &objp->flotante))
+			 return FALSE;
+		 if (!xdr_double (xdrs, &objp->doble))
+			 return FALSE;
+		 if (!xdr_char (xdrs, &objp->caracter))
+			 return FALSE;
+		buf = XDR_INLINE (xdrs, ( 10 ) * BYTES_PER_XDR_UNIT);
+		if (buf == NULL) {
+			 if (!xdr_vector (xdrs, (char *)objp->vector_de_enteros, 10,
+				sizeof (int), (xdrproc_t) xdr_int))
+				 return FALSE;
+
+		} else {
+		{
+			register int *genp;
+
+			for (i = 0, genp = objp->vector_de_enteros;
+				i < 10; ++i) {
+				IXDR_PUT_LONG(buf, *genp++);
+			}
+		}
+		}
+		 if (!xdr_string (xdrs, &objp->str, ~0))
+			 return FALSE;
+		return TRUE;
+	} else if (xdrs->x_op == XDR_DECODE) {
+		 if (!xdr_int (xdrs, &objp->opcion))
+			 return FALSE;
+		 if (!xdr_int (xdrs, &objp->entero))
+			 return FALSE;
+		 if (!xdr_float (xdrs, &objp->flotante))
+			 return FALSE;
+		 if (!xdr_double (xdrs, &objp->doble))
+			 return FALSE;
+		 if (!xdr_char (xdrs, &objp->caracter))
+			 return FALSE;
+		buf = XDR_INLINE (xdrs, ( 10 ) * BYTES_PER_XDR_UNIT);
+		if (buf == NULL) {
+			 if (!xdr_vector (xdrs, (char *)objp->vector_de_enteros, 10,
+				sizeof (int), (xdrproc_t) xdr_int))
+				 return FALSE;
+
+		} else {
+		{
+			register int *genp;
+
+			for (i = 0, genp = objp->vector_de_enteros;
+				i < 10; ++i) {
+				*genp++ = IXDR_GET_LONG(buf);
+			}
+		}
+		}
+		 if (!xdr_string (xdrs, &objp->str, ~0))
+			 return FALSE;
+	 return TRUE;
+	}
+
+	 if (!xdr_int (xdrs, &objp->opcion))
 		 return FALSE;
-	 if (!xdr_pointer (xdrs, (char **)&objp->user, sizeof (entidad), (xdrproc_t) xdr_entidad))
+	 if (!xdr_int (xdrs, &objp->entero))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->moneda_compra, 4,
-		sizeof (char), (xdrproc_t) xdr_char))
+	 if (!xdr_float (xdrs, &objp->flotante))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->moneda_pago, 4,
-		sizeof (char), (xdrproc_t) xdr_char))
+	 if (!xdr_double (xdrs, &objp->doble))
 		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->cantidad))
+	 if (!xdr_char (xdrs, &objp->caracter))
+		 return FALSE;
+	 if (!xdr_vector (xdrs, (char *)objp->vector_de_enteros, 10,
+		sizeof (int), (xdrproc_t) xdr_int))
+		 return FALSE;
+	 if (!xdr_string (xdrs, &objp->str, ~0))
 		 return FALSE;
 	return TRUE;
 }

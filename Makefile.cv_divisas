@@ -12,8 +12,8 @@ SOURCES_SVC.c =
 SOURCES_SVC.h = 
 SOURCES.x = cv_divisas.x
 
-TARGETS_SVC.c = cv_divisas_svc.c cv_divisas_server.c cv_divisas_xdr.c 
-TARGETS_CLNT.c = cv_divisas_clnt.c cv_divisas_client.c cv_divisas_xdr.c 
+TARGETS_SVC.c = cv_divisas_svc.c cv_divisas_server.c cv_divisas_xdr.c funciones_server.h 
+TARGETS_CLNT.c = cv_divisas_clnt.c cv_divisas_client.c cv_divisas_xdr.c funciones_client.h
 TARGETS = cv_divisas.h cv_divisas_xdr.c cv_divisas_clnt.c cv_divisas_svc.c cv_divisas_client.c cv_divisas_server.c
 
 OBJECTS_CLNT = $(SOURCES_CLNT.c:%.c=%.o) $(TARGETS_CLNT.c:%.c=%.o)

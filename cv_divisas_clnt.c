@@ -9,62 +9,62 @@
 /* Default timeout can be changed using clnt_control() */
 static struct timeval TIMEOUT = { 25, 0 };
 
-int *
+char **
 compra_divisas_1(struct CompraVenta *argp, CLIENT *clnt)
 {
-	static int clnt_res;
+	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, compra_divisas,
 		(xdrproc_t) xdr_CompraVenta, (caddr_t) argp,
-		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
 	return (&clnt_res);
 }
 
-int *
+char **
 venta_divisas_1(struct CompraVenta *argp, CLIENT *clnt)
 {
-	static int clnt_res;
+	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, venta_divisas,
 		(xdrproc_t) xdr_CompraVenta, (caddr_t) argp,
-		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
 	return (&clnt_res);
 }
 
-void *
-listar_divisas_1(struct CompraVenta *argp, CLIENT *clnt)
+char **
+listar_divisas_1(int *argp, CLIENT *clnt)
 {
-	static char clnt_res;
+	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, listar_divisas,
-		(xdrproc_t) xdr_CompraVenta, (caddr_t) argp,
-		(xdrproc_t) xdr_void, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_int, (caddr_t) argp,
+		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
-	return ((void *)&clnt_res);
+	return (&clnt_res);
 }
 
-void *
+char **
 listardetalles_divisas_1(struct CompraVenta *argp, CLIENT *clnt)
 {
-	static char clnt_res;
+	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, listardetalles_divisas,
 		(xdrproc_t) xdr_CompraVenta, (caddr_t) argp,
-		(xdrproc_t) xdr_void, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
-	return ((void *)&clnt_res);
+	return (&clnt_res);
 }

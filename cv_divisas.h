@@ -14,18 +14,14 @@ extern "C" {
 #endif
 
 
-struct entidad {
-	char tipo_moneda[4];
-	char cantidad[12];
-};
-typedef struct entidad entidad;
-
 struct CompraVenta {
-	struct entidad *sistem;
-	struct entidad *user;
-	char moneda_compra[4];
-	char moneda_pago[4];
-	int cantidad;
+	int opcion;
+	int entero;
+	float flotante;
+	double doble;
+	char caracter;
+	int vector_de_enteros[10];
+	char *str;
 };
 typedef struct CompraVenta CompraVenta;
 
@@ -34,43 +30,41 @@ typedef struct CompraVenta CompraVenta;
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define compra_divisas 1
-extern  int * compra_divisas_1(struct CompraVenta *, CLIENT *);
-extern  int * compra_divisas_1_svc(struct CompraVenta *, struct svc_req *);
+extern  char ** compra_divisas_1(struct CompraVenta *, CLIENT *);
+extern  char ** compra_divisas_1_svc(struct CompraVenta *, struct svc_req *);
 #define venta_divisas 2
-extern  int * venta_divisas_1(struct CompraVenta *, CLIENT *);
-extern  int * venta_divisas_1_svc(struct CompraVenta *, struct svc_req *);
+extern  char ** venta_divisas_1(struct CompraVenta *, CLIENT *);
+extern  char ** venta_divisas_1_svc(struct CompraVenta *, struct svc_req *);
 #define listar_divisas 3
-extern  void * listar_divisas_1(struct CompraVenta *, CLIENT *);
-extern  void * listar_divisas_1_svc(struct CompraVenta *, struct svc_req *);
+extern  char ** listar_divisas_1(int *, CLIENT *);
+extern  char ** listar_divisas_1_svc(int *, struct svc_req *);
 #define listardetalles_divisas 4
-extern  void * listardetalles_divisas_1(struct CompraVenta *, CLIENT *);
-extern  void * listardetalles_divisas_1_svc(struct CompraVenta *, struct svc_req *);
+extern  char ** listardetalles_divisas_1(struct CompraVenta *, CLIENT *);
+extern  char ** listardetalles_divisas_1_svc(struct CompraVenta *, struct svc_req *);
 extern int cv_divisas_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
 #define compra_divisas 1
-extern  int * compra_divisas_1();
-extern  int * compra_divisas_1_svc();
+extern  char ** compra_divisas_1();
+extern  char ** compra_divisas_1_svc();
 #define venta_divisas 2
-extern  int * venta_divisas_1();
-extern  int * venta_divisas_1_svc();
+extern  char ** venta_divisas_1();
+extern  char ** venta_divisas_1_svc();
 #define listar_divisas 3
-extern  void * listar_divisas_1();
-extern  void * listar_divisas_1_svc();
+extern  char ** listar_divisas_1();
+extern  char ** listar_divisas_1_svc();
 #define listardetalles_divisas 4
-extern  void * listardetalles_divisas_1();
-extern  void * listardetalles_divisas_1_svc();
+extern  char ** listardetalles_divisas_1();
+extern  char ** listardetalles_divisas_1_svc();
 extern int cv_divisas_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_entidad (XDR *, entidad*);
 extern  bool_t xdr_CompraVenta (XDR *, CompraVenta*);
 
 #else /* K&R C */
-extern bool_t xdr_entidad ();
 extern bool_t xdr_CompraVenta ();
 
 #endif /* K&R C */
