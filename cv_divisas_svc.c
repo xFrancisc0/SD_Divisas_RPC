@@ -3,7 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include "divisas.h"
+#include "cv_divisas.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <rpc/pmap_clnt.h>
@@ -17,12 +17,13 @@
 #endif
 
 static void
-divisas_1(struct svc_req *rqstp, register SVCXPRT *transp)
+cv_divisas_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		struct EstructuraDatos comprar_divisas_1_arg;
-		struct EstructuraDatos vender_divisas_1_arg;
-		struct EstructuraDatos buscar_info_divisa_1_arg;
+		struct CompraVenta compra_divisas_1_arg;
+		struct CompraVenta venta_divisas_1_arg;
+		int listar_divisas_1_arg;
+		struct CompraVenta listardetalles_divisas_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -33,28 +34,28 @@ divisas_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case comprar_divisas:
-		_xdr_argument = (xdrproc_t) xdr_EstructuraDatos;
+	case compra_divisas:
+		_xdr_argument = (xdrproc_t) xdr_CompraVenta;
 		_xdr_result = (xdrproc_t) xdr_wrapstring;
-		local = (char *(*)(char *, struct svc_req *)) comprar_divisas_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) compra_divisas_1_svc;
 		break;
 
-	case vender_divisas:
-		_xdr_argument = (xdrproc_t) xdr_EstructuraDatos;
+	case venta_divisas:
+		_xdr_argument = (xdrproc_t) xdr_CompraVenta;
 		_xdr_result = (xdrproc_t) xdr_wrapstring;
-		local = (char *(*)(char *, struct svc_req *)) vender_divisas_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) venta_divisas_1_svc;
 		break;
 
 	case listar_divisas:
-		_xdr_argument = (xdrproc_t) xdr_void;
+		_xdr_argument = (xdrproc_t) xdr_int;
 		_xdr_result = (xdrproc_t) xdr_wrapstring;
 		local = (char *(*)(char *, struct svc_req *)) listar_divisas_1_svc;
 		break;
 
-	case buscar_info_divisa:
-		_xdr_argument = (xdrproc_t) xdr_EstructuraDatos;
+	case listardetalles_divisas:
+		_xdr_argument = (xdrproc_t) xdr_CompraVenta;
 		_xdr_result = (xdrproc_t) xdr_wrapstring;
-		local = (char *(*)(char *, struct svc_req *)) buscar_info_divisa_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) listardetalles_divisas_1_svc;
 		break;
 
 	default:
@@ -82,15 +83,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (DIVISAS, DIVISAS_VER);
+	pmap_unset (CV_DIVISAS, CV_DIVISAS_VER);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, DIVISAS, DIVISAS_VER, divisas_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (DIVISAS, DIVISAS_VER, udp).");
+	if (!svc_register(transp, CV_DIVISAS, CV_DIVISAS_VER, cv_divisas_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (CV_DIVISAS, CV_DIVISAS_VER, udp).");
 		exit(1);
 	}
 
@@ -99,8 +100,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, DIVISAS, DIVISAS_VER, divisas_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (DIVISAS, DIVISAS_VER, tcp).");
+	if (!svc_register(transp, CV_DIVISAS, CV_DIVISAS_VER, cv_divisas_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (CV_DIVISAS, CV_DIVISAS_VER, tcp).");
 		exit(1);
 	}
 

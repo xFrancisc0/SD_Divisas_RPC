@@ -4,19 +4,19 @@
  */
 
 #include <memory.h> /* for memset */
-#include "divisas.h"
+#include "cv_divisas.h"
 
 /* Default timeout can be changed using clnt_control() */
 static struct timeval TIMEOUT = { 25, 0 };
 
 char **
-comprar_divisas_1(struct EstructuraDatos *argp, CLIENT *clnt)
+compra_divisas_1(struct CompraVenta *argp, CLIENT *clnt)
 {
 	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, comprar_divisas,
-		(xdrproc_t) xdr_EstructuraDatos, (caddr_t) argp,
+	if (clnt_call (clnt, compra_divisas,
+		(xdrproc_t) xdr_CompraVenta, (caddr_t) argp,
 		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
@@ -25,13 +25,13 @@ comprar_divisas_1(struct EstructuraDatos *argp, CLIENT *clnt)
 }
 
 char **
-vender_divisas_1(struct EstructuraDatos *argp, CLIENT *clnt)
+venta_divisas_1(struct CompraVenta *argp, CLIENT *clnt)
 {
 	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, vender_divisas,
-		(xdrproc_t) xdr_EstructuraDatos, (caddr_t) argp,
+	if (clnt_call (clnt, venta_divisas,
+		(xdrproc_t) xdr_CompraVenta, (caddr_t) argp,
 		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
@@ -40,13 +40,13 @@ vender_divisas_1(struct EstructuraDatos *argp, CLIENT *clnt)
 }
 
 char **
-listar_divisas_1(void *argp, CLIENT *clnt)
+listar_divisas_1(int *argp, CLIENT *clnt)
 {
 	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, listar_divisas,
-		(xdrproc_t) xdr_void, (caddr_t) argp,
+		(xdrproc_t) xdr_int, (caddr_t) argp,
 		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
@@ -55,13 +55,13 @@ listar_divisas_1(void *argp, CLIENT *clnt)
 }
 
 char **
-buscar_info_divisa_1(struct EstructuraDatos *argp, CLIENT *clnt)
+listardetalles_divisas_1(struct CompraVenta *argp, CLIENT *clnt)
 {
 	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, buscar_info_divisa,
-		(xdrproc_t) xdr_EstructuraDatos, (caddr_t) argp,
+	if (clnt_call (clnt, listardetalles_divisas,
+		(xdrproc_t) xdr_CompraVenta, (caddr_t) argp,
 		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);

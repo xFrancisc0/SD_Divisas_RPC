@@ -1,4 +1,5 @@
-struct EstructuraDatos{
+
+struct CompraVenta{
 	int opcion;
 	int entero;
 	float flotante;

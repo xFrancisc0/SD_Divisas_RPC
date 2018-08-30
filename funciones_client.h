@@ -2,11 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Si el SO es windows, usar system("cls")
+//si el SO es windows, usar el system("cls")
 #ifdef _WIN32
 #define CLEAR "cls"
-// Si no, usar system("clear")
-#else 
+//Si no, usar system("clear");
+#else
 #define CLEAR "clear"
 #endif
-

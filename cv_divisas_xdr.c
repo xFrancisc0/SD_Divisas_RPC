@@ -3,10 +3,10 @@
  * It was generated using rpcgen.
  */
 
-#include "divisas.h"
+#include "cv_divisas.h"
 
 bool_t
-xdr_EstructuraDatos (XDR *xdrs, EstructuraDatos *objp)
+xdr_CompraVenta (XDR *xdrs, CompraVenta *objp)
 {
 	register int32_t *buf;
 

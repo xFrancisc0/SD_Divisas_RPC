@@ -4,15 +4,11 @@
  * as a guideline for developing your own functions.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "divisas.h"
+#include "cv_divisas.h"
 #include "funciones_server.h"
 
-
 char **
-comprar_divisas_1_svc(struct EstructuraDatos *argp, struct svc_req *rqstp)
+compra_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
@@ -79,11 +75,8 @@ comprar_divisas_1_svc(struct EstructuraDatos *argp, struct svc_req *rqstp)
 return &result;
 }
 
-
-
-
 char **
-vender_divisas_1_svc(struct EstructuraDatos *argp, struct svc_req *rqstp)
+venta_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
@@ -95,19 +88,37 @@ vender_divisas_1_svc(struct EstructuraDatos *argp, struct svc_req *rqstp)
 }
 
 char **
-listar_divisas_1_svc(void *argp, struct svc_req *rqstp)
+listar_divisas_1_svc(int *argp, struct svc_req *rqstp)
 {
+	//recibe la opcion que puede ser 1,2 o 3
+	
 	static char * result;
-
-	/*
-	 * insert server code here
-	 */
-
+	char ** resultado;
+	int a=*argp;
+	printf("%i\n",a);
+	if(a==1){		//con 1 listaremos los datos del usuario con la funcion listar_datos_usuario
+		resultado=listar_datos_usuario();
+		printf("1------>%i\n",a);
+	}else{
+		if(a==2){//con 2 listaremos los datos del sistema con la funcion listar_datos_sistema
+			resultado=listar_datos_sistema();
+			printf("2------>%i\n",a);
+		}else{
+			if(a==3){// con 3 llistaremos los cambios de divisas con la funcion imprime_datos_conversion
+				resultado=imprime_datos_conversion();
+				printf("3-------->%i\n",a);
+			}else{
+				//strcpy(resultado,"Vuelva a intentarlo!!!\n");
+			}
+		}
+	}
+	
+	result = *resultado;
 	return &result;
 }
 
 char **
-buscar_info_divisa_1_svc(struct EstructuraDatos *argp, struct svc_req *rqstp)
+listardetalles_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
