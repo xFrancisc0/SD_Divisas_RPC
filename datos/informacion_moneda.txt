@@ -1,0 +1,3 @@
+|CLP|Peso chileno|Chile|1817|
+|USD|Dolar estadounidense|Estados unidos|1785|
+|EUR|Euro|Union Europea|1999|

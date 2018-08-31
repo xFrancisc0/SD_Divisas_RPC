@@ -122,9 +122,24 @@ listardetalles_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
-	/*
-	 * insert server code here
-	 */
+	char str[4];
+	char op[20];
+	char * *result_4;
+	char resultado[1000], resultado2[1000];
+
+
+	sprintf(str,"%s",argp->str);
+	result_4 = listar_informacion_moneda(str);
+	sprintf(resultado,"%s", (char *) *result_4);
+	
+	strcat(resultado, "\n\n");
+
+	result_4 = imprime_datos_conversion_filtrado(str);
+	sprintf(resultado2,"%s", (char *) *result_4);
+
+	strcat(resultado, resultado2);
+
+	result = resultado;
 
 	return &result;
 }

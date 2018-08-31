@@ -45,7 +45,7 @@ switch(op){
 		char straux[1000];
 		char opcion_origen, opcion_salida;
 		int i, opcion_cantidad;
-		sprintf(straux,"%s", (char *) *result_1);
+		sprintf(straux,"%s", (char *) *result_1); //La salida de la funcion la transformo en un string cuyo formato es %s.
 		do{
 		system(CLEAR);
 		printf("Usted ha elegido la opcion de comprar divisas\n");
@@ -230,17 +230,7 @@ case '3': //**************************************************MODULO LISTAR*****
 		int op_origen;//**cree una nueva opcion
 		int var;
 		int * a= &var;
-
-//result_3 = listar_divisas_1((int*)&listar_divisas_1_arg, clnt);
-//if (result_3 == (char **) NULL) {
-	//clnt_perror (clnt, "call failed");
-//}else{
-	
-		
-	
-		
-	do{//mostramos el menu de listar y preguntamos por la accion a seguir
-				
+			do{//mostramos el menu de listar y preguntamos por la accion a seguir
 				printf("Opcion Listar\n");
 				printf("===================\n");
 				printf("1)Cuenta Usuario\n2)Disponibilidad Sistema\n3)Cambio Divisas\n4)Volver\n");
@@ -291,19 +281,91 @@ case '3': //**************************************************MODULO LISTAR*****
 					
 					
 				}
-		}while(op_origen!=4);
-		system(CLEAR);
+			}while(op_origen!=4);
+			system(CLEAR);
 	break;		
-//}
-//	result_4 = buscar_info_divisa_1(&buscar_info_divisa_1_arg, clnt);
-//	if (result_4 == (char **) NULL) {
-//	clnt_perror (clnt, "call failed");
-//	}
-case 5:
-break;
-default:
-break;
+
+//Se usa basicamente el mismo codigo del servicio 3, sin embargo las diferencias recaen en el servidor.
+case '4': //****************MODULO LISTAR INFORMACION DE UNA MONEDA**************************************************
+		system(CLEAR);
+		int op_origen2;
+		char straux2[1000];
+			
+			do{//Se muestra el menu de listar la informacion de un tipo de moneda
+				printf("Opcion Listar informacion sobre un tipo de moneda\n");
+				printf("=================================================\n");
+				printf("OPCIONES\n\n1)CLP\n2)USD\n3)EUR\n4)Volver\n===================\nSeleccione una opcion:\n");
+				fflush(stdin);
+				scanf("%i",&op_origen2);
+				switch(op_origen2){
+					case 1:
+					system(CLEAR);
+					buscar_info_divisa_1_arg.str = strdup("CLP");
+										
+					result_4 = listardetalles_divisas_1(&buscar_info_divisa_1_arg, clnt);
+					if (result_4 == (char **) NULL) {
+					clnt_perror (clnt, "call failed");
+					}
+					sprintf(straux2,"%s", (char *) *result_4);
+					printf("%s", straux2); // Mostrar en pantalla la informacion del tipo de moneda seleccionado
+					printf("\n\n");	
+
+					break;
+
+
+					case 2:
+					system(CLEAR);
+					buscar_info_divisa_1_arg.str = strdup("USD");
+										
+					result_4 = listardetalles_divisas_1(&buscar_info_divisa_1_arg, clnt);
+					if (result_4 == (char **) NULL) {
+					clnt_perror (clnt, "call failed");
+					}
+					sprintf(straux2,"%s", (char *) *result_4);
+					printf("%s", straux2); // Mostrar en pantalla la informacion del tipo de moneda seleccionado
+					printf("\n\n");	
+					break;
+
+
+					case 3:
+					system(CLEAR);
+					buscar_info_divisa_1_arg.str = strdup("EUR");
+					
+					
+					result_4 = listardetalles_divisas_1(&buscar_info_divisa_1_arg, clnt);
+					if (result_4 == (char **) NULL) {
+					clnt_perror (clnt, "call failed");
+					}
+					sprintf(straux2,"%s", (char *) *result_4);
+					printf("%s", straux2); // Mostrar en pantalla la informacion del tipo de moneda seleccionado
+					printf("\n\n");	
+
+
+					break;
+						
+
+					case 4:
+						op_origen2=4;
+						
+						break;
+					default:
+						system(CLEAR);
+						printf("opcion ingresada no valida\n");
+						break;			
+					
+					
+					}
+					}while(op_origen2!=4);
+					system(CLEAR);
+
+				break;	
+
+
+				default:
+				break;
 }
+
+
 #ifndef	DEBUG
 clnt_destroy (clnt);
 #endif	/* DEBUG */
