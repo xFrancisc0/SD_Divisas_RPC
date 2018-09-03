@@ -244,12 +244,13 @@ char ** vender_divisa( entidad * sistem,  entidad * user, char moneda_venta[], c
 		while(fscanf(conversor,"%s %s %s",tipo_aux,tipo_aux2,tasa_cambio)!=EOF){ 
 					//buscamos en el archivo conversion.txt los tipos de moneda que se utilizaran y su tasa de cambio y lo guardamos en tasa_cambio
 						if(strcmp(tipo_aux2,moneda_recibo)==0 && strcmp(tipo_aux,moneda_venta)==0){
-							printf(" %s==%s && %s==%s\n",tipo_aux2,moneda_recibo,tipo_aux,moneda_venta);
+							//printf(" %s==%s && %s==%s\n",tipo_aux2,moneda_recibo,tipo_aux,moneda_venta);
 							system("pause");
 							break;
 						}
 						strcpy(tipo_aux,"");
 				}
+				
 		//realizamos la  conversion de divisas		
 	conversion=cantidad*atof(tasa_cambio);
 			fclose(conversor);
@@ -286,6 +287,7 @@ char ** vender_divisa( entidad * sistem,  entidad * user, char moneda_venta[], c
 			system("pause");
 			*/
 			//printf("i=%i J=%i\n\n",i,j);
+
 			//cerramos f y f2 para poder realizar la eliminacion de estos
 			fclose(f);
 			fclose(f2);
@@ -304,7 +306,7 @@ char ** vender_divisa( entidad * sistem,  entidad * user, char moneda_venta[], c
 				sprintf(cantidad_usuario_origenaux, "%i", cantidad_usuario_origen);
 
 				// Esto se devolvera al cliente
-				strcpy(resultado, "================================\nEl usuario antes poseia\n");
+				strcpy(resultado, "================================\nEl usuario antes poseía\n");
 				strcat(resultado, user[j].cantidad );
 				strcat(resultado, " ");
 				strcat(resultado, moneda_venta);
@@ -320,7 +322,7 @@ char ** vender_divisa( entidad * sistem,  entidad * user, char moneda_venta[], c
 				strcat(resultado, cantidad_usuario_origenaux );
 				strcat(resultado, " ");
 				strcat(resultado, moneda_recibo );
-				strcat(resultado, "\n================================\nIngrese un numero para continuar.\n\n\n" );
+				strcat(resultado, "\n================================\nIngrese un número para continuar.\n\n\n" );
 				
 			for(l=0;l<3;l++){
 			
@@ -329,14 +331,16 @@ char ** vender_divisa( entidad * sistem,  entidad * user, char moneda_venta[], c
 					fprintf(nuevo_cliente,"%s %i\n",user[l].tipo_moneda,cantidad_usuario_cambio);
 					fprintf(nuevo_servidor,"%s %i\n",sistem[l].tipo_moneda,cantidad_sistema);
 				
-				}else{
+				}else
+				{
 					if(l==i){//buscamos donde el usuario gano por la venta y donde el sistema pago con un tipo de moneda que esta almacenado en la posicion i, para escribirlo en el txt
 					
 						fprintf(nuevo_cliente,"%s %i\n",user[l].tipo_moneda,cantidad_usuario_origen);
 						fprintf(nuevo_servidor,"%s %i\n",sistem[l].tipo_moneda,cantidad_sistema_pago);
 						
-					}else{//sino, quiere decir que no se realizo  modificacion alguna en la posicion que se encuentra
-					
+					}else
+
+					{//sino, quiere decir que no se realizo  modificacion alguna en la posicion que se encuentra
 					fprintf(nuevo_cliente,"%s %s\n",user[l].tipo_moneda,user[l].cantidad);
 					fprintf(nuevo_servidor,"%s %s\n",sistem[l].tipo_moneda,sistem[l].cantidad);
 				
@@ -355,10 +359,7 @@ char ** vender_divisa( entidad * sistem,  entidad * user, char moneda_venta[], c
 		
 		return &result;
 		
-		
 	}
-
-
 
 char ** listar_datos_usuario(){
 	static char * result;
