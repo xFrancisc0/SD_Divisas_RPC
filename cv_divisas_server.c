@@ -14,7 +14,7 @@ compra_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 
 	char str[3], resultado[1000], resultado2[100];
 	int i;
-
+	int cant_glob=0;
 	sprintf(str,"%c",argp->caracter);
 
 	if(strcmp(str,"1")==0){
@@ -24,9 +24,14 @@ compra_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 	entidad dinero_usuario[3];	 //Creo un vector que me almacene los datos de dinero del usuario
 
 	FILE * f=fopen("./datos/usuario.txt","a+");
-	FILE * f2=fopen("./datos/sistema.txt","a+");	
-	rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
-	rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
+	FILE * f2=fopen("./datos/sistema.txt","a+");
+	if(!(cant_glob>0)){
+		rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
+		rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
+		cant_glob++;
+	}	
+	fclose(f);
+	fclose(f2);
 
 	
 	for(i=0;i<3;i++){
