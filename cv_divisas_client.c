@@ -37,7 +37,7 @@ exit (1);
 // Si la opcion elegida es 1, se crearan las siguientes variables.
 switch(op){
 // Modulo de compras
-	case '1':
+	case 1:
 //Si no mando str al server me genera error, solo por eso lo envio. Cuando realmente envie str sera cuando tenga que enviar multiples datos al server.
 		comprar_divisas_1_arg.str = strdup("Cualquier Valor"); // Le paso el valor de 1 al *str . (COn strdup se pasan valores a char *str (en lugar de strcmpy que sirve para str[]))
 		comprar_divisas_1_arg.caracter = '1'; //El que realmente envio es el caracter
@@ -445,9 +445,13 @@ case 4: //****************MODULO LISTAR INFORMACION DE UNA MONEDA***************
 clnt_destroy (clnt);
 #endif	/* DEBUG */
 }
+
+
+
 int
 main (int argc, char *argv[])
 {
+char op_origenaux[100];
 char *host;
 if (argc < 2) {
 	printf ("usage: %s server_host\n", argv[0]);
@@ -455,7 +459,7 @@ if (argc < 2) {
 }
 host = argv[1];
 //Desde aqui empieza la ejecucion del client en si.
-char opcion;
+int opcion;
 do{ system(CLEAR);
 	printf("MENU\n");
 	printf("==================\n");
@@ -467,12 +471,28 @@ do{ system(CLEAR);
 	printf("4) Buscar una divisa y desplegar su informacion.\n");
 	printf("5) Salir.\n");
 	fflush(stdin);
-	scanf("%c",&opcion);
-	if(opcion=='5'){ //Si quiero salir del programa
+
+scanf("%s",op_origenaux);
+
+if(atoi(op_origenaux)==5){ //Si quiero salir del programa
 		break; //Hago break al do-while y salgo del programa
 	}
+
+
+//if de validacion
+if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+opcion=atoi(op_origenaux);
+printf("%i", opcion);
+
 //Se ejecutara el modulo divisas_1 que contiene los 4 servicios de este sistema.
-	divisas_1 (host, opcion);
-}while(opcion!='9');
+divisas_1 (host, opcion);
+
+//Else de la validacion
+}else{
+printf("opcion ingresada no valida\n");	
+}
+
+
+}while(opcion!=5);
 exit (0);
 } 
