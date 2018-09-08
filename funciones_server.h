@@ -10,8 +10,8 @@ typedef struct{
 void inicializar_struct(entidad en[]){
 	int i=0;
 	for(i=0;i<3;i++){
-		strcpy(en[i].tipo_moneda,"a");
-		strcpy(en[i].cantidad,"a");
+		strcpy(en[i].tipo_moneda,"0");
+		strcpy(en[i].cantidad,"0");
 	}
 
 
@@ -21,15 +21,15 @@ void rescata_dinero(entidad ent[], FILE * f){
 	if(f==NULL){
 		printf("no existe el archivo");
 	}else{
-		if(strcmp(ent[i].tipo_moneda,"a")==0 && strcmp(ent[i].cantidad,"a")==0){
-		while(fscanf(f,"%s %s\n",ent[i].tipo_moneda,ent[i].cantidad)!=EOF){
+		
+	 	while(fscanf(f,"%s %s\n",ent[i].tipo_moneda,ent[i].cantidad)!=EOF){
 			//printf("%s %s\n",ent[i].tipo_moneda,ent[i].cantidad);
+			fflush(stdin);
 			i++;
 		}
-	 }else{
-	 	inicializar_struct(ent);
+	 	
 			return;	 	
-	 }
+	 
 	}
 	return ;
 }
