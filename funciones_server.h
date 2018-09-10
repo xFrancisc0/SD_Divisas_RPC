@@ -34,6 +34,84 @@ void rescata_dinero(entidad ent[], FILE * f){
 	return ;
 }
 
+
+//Es muy parecida a la funcion imprime_datos_conversion. Sin embargo hay dos diferencias.
+
+//Esta funcion recibe como entrada un string, el cual se utiliza para comparar.
+
+char** imprime_datos_conversion_filtrado(char tipo_moneda[]){
+	FILE * f;
+	static char * result;
+	char resultado[1000];
+
+	f=fopen("./datos/conversion.txt","a+");
+	
+	printf("======================================\nC O N V E R S I O N E S\n");
+	strcpy(resultado, "======================================\nC O N V E R S I O N E S\n");
+
+	printf("======================================\n");
+
+	char origen[4],destino[4],conversion[12];
+	while(fscanf(f,"%s %s %s\n",destino,origen,conversion)!=EOF){  //Mientras el archivo no se haya acabado de leer
+		if(strcmp(destino, tipo_moneda)==0){                       //Si la entrada de la funcion es igual al tipo de moneda leido en la linea
+		printf("1 %s corresponde a %s de la moneda %s\n",destino,conversion,origen); //Desplegar en pantalla su informacion acerca de su conversion con otros tipos de moneda.
+		
+		strcat(resultado, "1 ");
+		strcat(resultado, destino);
+		strcat(resultado, " corresponde a ");
+		strcat(resultado, conversion);
+		strcat(resultado, " de la moneda ");
+		strcat(resultado, origen);
+		strcat(resultado, ".\n");
+		}
+	}
+	fclose(f);
+
+	result=resultado;
+		
+	return &result;
+
+}
+
+
+// Se quiere listar la informacion completa de un tipo de divisa.
+char** listar_informacion_moneda(char tipo_moneda[]){
+	FILE * f;
+	static char * result;
+	f=fopen("./datos/informacion_moneda.txt","a+"); // Se abre informacion_moneda.txt. Este archivo contiene informacion en detalle de la moneda.
+	
+	char *tipo_monedaaux, *nombre_moneda, *localidad_moneda, *anio_moneda, str[1000];
+	char resultado[1000];
+
+	strcpy(resultado, "================================\n");
+	while(fgets(str, 1000, f)!=NULL){  // Mientras que la lectura del archivo no sea EOF
+		tipo_monedaaux=strtok(str,"|"); // Se obtiene Tipomoneda| del archivo. Este puede ser CLP EUR USD.
+		
+		if(strcmp(tipo_monedaaux,tipo_moneda)==0){  //Si en una fila llegara a ocurrir que el tipo de moneda que se quiere listar es el tipo de moneda de la linea actual
+		nombre_moneda=strtok(NULL,"|");             //Se hace un split (Strtok) por cada " | " dentro de la linea. Ejemplo: CLP|10|Hola seria CLP  10  Hola mediante strtok.
+		localidad_moneda=strtok(NULL,"|");
+		anio_moneda=strtok(NULL,"|");
+
+		strcat(resultado, "La moneda representada por ");
+		strcat(resultado, tipo_monedaaux);
+		strcat(resultado, " es el ");
+		strcat(resultado, nombre_moneda);
+		strcat(resultado, ".\nEsta moneda es usada por ");
+		strcat(resultado, localidad_moneda);
+		strcat(resultado, " y esta vigente desde el anio ");
+		strcat(resultado, anio_moneda);
+		}
+	}
+	
+	fclose(f);
+
+	result=resultado;
+		
+	return &result;
+}
+
+
+
 char** div_comprar( entidad * sistem,  entidad * user, char moneda_compra[], char moneda_pago[], int cantidad, FILE * f, FILE * f2){
 	static char * result;
 	FILE * conversor = fopen("./datos/conversion.txt","a+");

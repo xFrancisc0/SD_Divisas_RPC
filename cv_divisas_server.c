@@ -88,11 +88,69 @@ venta_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
-	/*
-	 * insert server code here
-	 */
+	char str[3], resultado[1000], resultado2[100];
+	int i;
 
+	sprintf(str,"%c",argp->caracter);
+
+	if(strcmp(str,"1")==0){
+
+    //Inicialmente debo rescatar los datos del usuario y del server.
+    entidad dinero_servidor[3];  //Creo un vector que me almacene los datos de dinero del servidor
+	entidad dinero_usuario[3];	 //Creo un vector que me almacene los datos de dinero del usuario
+
+	FILE * f=fopen("./datos/usuario.txt","a+");
+	FILE * f2=fopen("./datos/sistema.txt","a+");	
+	rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
+	rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
+	fclose(f);
+	fclose(f2);
+	if(strlen(resultado)>0){
+		strcpy(resultado,"");
+	}
+	
+	for(i=0;i<3;i++){
+	sprintf(resultado2, "%s %s", dinero_usuario[i].tipo_moneda, dinero_usuario[i].cantidad);	
+	strcat(resultado, resultado2);
+	strcat(resultado, "\n");
+	}
+
+	result = strdup(resultado);
 	return &result;
+	}
+
+	if(strcmp(str,"2")==0){
+
+    //Inicialmente debo rescatar los datos del usuario y del server.
+    entidad dinero_servidor[3];  //Creo un vector que me almacene los datos de dinero del servidor
+	entidad dinero_usuario[3];	 //Creo un vector que me almacene los datos de dinero del usuario
+	char moneda_venta[4], moneda_pago[4], str[20];
+	char * *result_2;
+	char resultado[1000];
+	int cantidad;
+	char *v1, *v2, *v3;
+
+	FILE * f=fopen("./datos/usuario.txt","a+");
+	FILE * f2=fopen("./datos/sistema.txt","a+");	
+	rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
+	rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
+
+	sprintf(str,"%s",argp->str);         //Recupero el string que envie al server
+	v1 = strtok(str, "-");
+	v2 = strtok(NULL,"-");
+	v3 = strtok(NULL,"-");
+
+	result_2 = vender_divisa(dinero_servidor,dinero_usuario,v1,v2,atoi(v3),f,f2);
+
+	sprintf(resultado,"%s", (char *) *result_2);
+	
+	result = resultado;
+	return &result;
+	}
+
+
+
+return &result;
 }
 
 char **
@@ -128,11 +186,27 @@ listar_divisas_1_svc(int *argp, struct svc_req *rqstp)
 char **
 listardetalles_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
+	
 	static char * result;
 
-	/*
-	 * insert server code here
-	 */
+	char str[4];
+	char op[20];
+	char * *result_4;
+	char resultado[1000], resultado2[1000];
 
-	return &result;
+
+	sprintf(str,"%s",argp->str);
+	result_4 = listar_informacion_moneda(str);
+	sprintf(resultado,"%s", (char *) *result_4);
+	
+	strcat(resultado, "\n\n");
+
+	result_4 = imprime_datos_conversion_filtrado(str);
+	sprintf(resultado2,"%s", (char *) *result_4);
+
+	strcat(resultado, resultado2);
+
+	result = resultado;
+
+return &result;
 }
