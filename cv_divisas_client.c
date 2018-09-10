@@ -35,10 +35,12 @@ exit (1);
 //Dependiendo de la opcion elegida en el menu, se elegira un servicio determinado.
 // Si la opcion elegida es 1, se crearan las siguientes variables.
 switch(op){
+
 // Modulo de compras
 	case 1:
 //Si no mando str al server me genera error, solo por eso lo envio. Cuando realmente envie str sera cuando tenga que enviar multiples datos al server.
-		comprar_divisas_1_arg.str = strdup("Cualquier Valor"); // Le paso el valor de 1 al *str . (COn strdup se pasan valores a char *str (en lugar de strcmpy que sirve para str[]))
+		system(CLEAR);
+    comprar_divisas_1_arg.str = strdup("Cualquier Valor"); // Le paso el valor de 1 al *str . (COn strdup se pasan valores a char *str (en lugar de strcmpy que sirve para str[]))
 		comprar_divisas_1_arg.caracter = '1'; //El que realmente envio es el caracter
 		result_1 = compra_divisas_1(&comprar_divisas_1_arg, clnt); //Desplego datos al usuario.
 		if (result_1 == (char **) NULL) {
@@ -49,8 +51,10 @@ switch(op){
 		int i, opcion_cantidad, opcion_origen, opcion_salida;
 		sprintf(straux,"%s", (char *) *result_1); //La salida de la funcion la transformo en un string cuyo formato es %s.
 		do{
-		system(CLEAR);
-		printf("Usted ha elegido la opcion de comprar divisas\n");
+		opcion_cantidad=0;
+    opcion_origen=0;
+    opcion_salida=0;
+		printf("\nUsted ha elegido la opcion de comprar divisas\n");
 		printf("================================\nEl usuario actualmente posee\n\n");
 		printf("%s", straux);
 		printf("================================\n");
@@ -66,9 +70,22 @@ switch(op){
 			case 1:
 						do{
 							printf("Ingrese el monto a comprar:");
-							fflush(stdin);
-							scanf("%i",&opcion_cantidad);
-							printf("\n");
+              fflush(stdin);
+
+              scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_cantidad=atoi(op_origenaux);
+              printf("\n");
+              break;
+           
+              //Else de la validacion
+              }else{
+              opcion_cantidad=-1;
+              printf("Opcion ingresada no valida\n");
+              printf("\n"); 
+              }
+
 						}while(opcion_cantidad<0);
 						do{
 							printf("===================\n");
@@ -79,7 +96,7 @@ switch(op){
 							//if de validacion
 							if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
 							opcion_salida=atoi(op_origenaux);
-
+              printf("\n");
 
 							switch(opcion_salida){
 									case 2:
@@ -121,7 +138,7 @@ switch(op){
 						//Else de la validacion
 						}else{
 
-						printf("opcion ingresada no valida\n");	
+						printf("Opcion ingresada no valida\n\n");	
 						}
 
 						}while(opcion_salida!=9);
@@ -129,10 +146,22 @@ switch(op){
 					break;
 					case 2:
 							do{
-								printf("Ingrese el monto a comprar:");
-								fflush(stdin);
-								scanf("%i",&opcion_cantidad);
-								printf("\n");
+							printf("Ingrese el monto a comprar:");
+              fflush(stdin);
+
+              scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_cantidad=atoi(op_origenaux);
+              printf("\n");
+              break;
+           
+              //Else de la validacion
+              }else{
+              opcion_cantidad=-1;
+              printf("Opcion ingresada no valida\n");
+              printf("\n"); 
+              }
 							}while(opcion_cantidad<0);
 							do{
 								printf("===================\n");
@@ -181,7 +210,7 @@ switch(op){
 						//Else de la validacion
 						}else{
 
-						printf("opcion ingresada no valida\n");	
+						printf("Opcion ingresada no valida\n\n"); 
 						}
 
 
@@ -191,9 +220,21 @@ switch(op){
 				case 3:
 					do{
 						printf("Ingrese el monto a comprar:");
-						fflush(stdin);
-						scanf("%i",&opcion_cantidad);
-						printf("\n");
+              fflush(stdin);
+
+              scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_cantidad=atoi(op_origenaux);
+              printf("\n");
+              break;
+           
+              //Else de la validacion
+              }else{
+              opcion_cantidad=-1;
+              printf("Opcion ingresada no valida\n");
+              printf("\n"); 
+              }
 						}while(opcion_cantidad<0);
 						do{
 							printf("===================\n");
@@ -245,7 +286,7 @@ switch(op){
 						//Else de la validacion
 						}else{
 
-						printf("opcion ingresada no valida\n");	
+						printf("Opcion ingresada no valida\n\n"); 
 						}
 
 			}while(opcion_salida!=9);
@@ -264,8 +305,8 @@ switch(op){
 
 						//Else de la validacion
 						}else{
-
-						printf("opcion ingresada no valida\n");	
+            system(CLEAR);
+						printf("Opcion ingresada no valida\n\n\n\n");	
 						}
 
 }while(opcion_origen!=9);
@@ -290,27 +331,52 @@ break;
 		
 		sprintf(straux,"%s", (char *) *result_2); //La salida de la funcion la transformo en un string cuyo formato es %s.
 		do{
-		system(CLEAR);
-		printf("Usted ha elegido la opción de vender divisas\n");
+    opcion_cantidad=0;
+    opcion_origen=0;
+    opcion_salida=0;
+		printf("\nUsted ha elegido la opción de vender divisas\n");
 		printf("================================\nEl usuario actualmente posee\n\n");
 		printf("%s", straux);
 		printf("================================\n");
 		printf("OPCIONES\n\n1)CLP\n2)USD\n3)EUR\n9)Volver\n===================\nSeleccione una opción que represente la moneda a comprar:\n");
 		fflush(stdin);
-		scanf("%i",&opcion_origen);
+		scanf("%s",op_origenaux);
+
+      //if de validacion
+      if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+      opcion_origen=atoi(op_origenaux);
+
 			switch(opcion_origen){
 				case 1:
 						do{
 							printf("Ingrese el monto a vender:");
 							fflush(stdin);
-							scanf("%i",&opcion_cantidad);
-							printf("\n");
+
+              scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_cantidad=atoi(op_origenaux);
+              printf("\n");
+              break;
+           
+              //Else de la validacion
+              }else{
+              opcion_cantidad=-1;
+              printf("Opcion ingresada no valida\n");
+              printf("\n"); 
+              }
 						}while(opcion_cantidad<0);
 						do{
 							printf("===================\n");
 							printf("OPCIONES\n\n2)USD\n3)EUR\n9)Volver\n===================\nSeleccione moneda con la que pagará: ");
 							fflush(stdin);
-							scanf("%i",&opcion_salida);
+
+              scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_salida=atoi(op_origenaux);
+
+
 							switch(opcion_salida){
 									case 2:
 											vender_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.
@@ -347,21 +413,47 @@ break;
 											printf("La opción %i no es válida.\n\n", opcion_salida);
 										break;
 								}
+               
+
+           //Else de la validacion
+            }else{
+
+            printf("Opcion ingresada no valida\n\n"); 
+            }
+
 						}while(opcion_salida!=9);
 						system(CLEAR);
 					break;
 					case 2:
 							do{
 								printf("Ingrese el monto a vender:");
-								fflush(stdin);
-								scanf("%i",&opcion_cantidad);
-								printf("\n");
+              fflush(stdin);
+
+              scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_cantidad=atoi(op_origenaux);
+              printf("\n");
+              break;
+           
+              //Else de la validacion
+              }else{
+              opcion_cantidad=-1;
+              printf("Opcion ingresada no valida\n");
+              printf("\n"); 
+              }
+
 							}while(opcion_cantidad<0);
 							do{
 								printf("===================\n");
 								printf("OPCIONES\n\n1)CLP\n3)EUR\n9)Volver\n===================\nSeleccione moneda con la que pagará: ");
 								fflush(stdin);
-								scanf("%i",&opcion_salida);
+								
+                scanf("%s",op_origenaux);
+                //if de validacion
+                if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+                opcion_salida=atoi(op_origenaux);
+
 								switch(opcion_salida){
 										case 1:
 											vender_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.
@@ -397,21 +489,44 @@ break;
 											printf("La opción %i no es válida.\n\n", opcion_salida);
 											break;
 											}
+
+                      }else{
+                      printf("Opcion ingresada no valida\n\n"); 
+                      }
+
+
 						}while(opcion_salida!=9);
 						system(CLEAR);
 					break;
 				case 3:
 					do{
 						printf("Ingrese el monto a vender:");
-						fflush(stdin);
-						scanf("%i",&opcion_cantidad);
-						printf("\n");
+              fflush(stdin);
+
+              scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_cantidad=atoi(op_origenaux);
+              printf("\n");
+              break;
+           
+              //Else de la validacion
+              }else{
+              opcion_cantidad=-1;
+              printf("Opcion ingresada no valida\n");
+              printf("\n"); 
+              }
+
 						}while(opcion_cantidad<0);
 						do{
 							printf("===================\n");
 							printf("OPCIONES\n\n1)CLP\n2)USD\n9)Volver\n===================\nSeleccione moneda con la que pagará: ");
 							fflush(stdin);
-							scanf("%i",&opcion_salida);
+							scanf("%s",op_origenaux);
+              //if de validacion
+              if(IsNaN_int(op_origenaux)==0 && IsNaN_float(op_origenaux)==0 && IsNaS(op_origenaux)==1){
+              opcion_salida=atoi(op_origenaux);
+
 						switch(opcion_salida){
 						case 1:
 							vender_divisas_1_arg.caracter = '2'; //El submodulo del servicio a ejecutar en el server es el 2.
@@ -448,6 +563,13 @@ break;
 							printf("La opción %i no es válida.\n\n", opcion_salida);
 							break;
 							}
+
+              //Else de la validacion
+              }else{
+
+              printf("Opcion ingresada no valida\n\n"); 
+              }
+
 			}while(opcion_salida!=9);
 			system(CLEAR);
 			break;
@@ -461,16 +583,23 @@ break;
 	break;	
 	}
 	
+  //Else de la validacion
+    }else{
+      system(CLEAR);
+      printf("Opcion ingresada no valida\n\n\n\n"); 
+    }
+
+
 }while(opcion_origen!=9);
 break;
 
 case 3: //**************************************************MODULO LISTAR**************************************************
 		system(CLEAR);
-		int op_origen;//**cree una nueva opcion
+		int op_origen=0;//**cree una nueva opcion
 		int var;
 		int * a= &var;
 			do{//mostramos el menu de listar y preguntamos por la accion a seguir
-				printf("Opcion Listar\n");
+				printf("\nOpcion Listar\n");
 				printf("===================\n");
 				printf("1)Cuenta Usuario\n2)Disponibilidad Sistema\n3)Cambio Divisas\n4)Volver\n");
 				printf("Ingrese su opcion:");
@@ -483,7 +612,7 @@ case 3: //**************************************************MODULO LISTAR*******
 
 				switch(op_origen){
 					case 1:
-
+          system(CLEAR);
 					*a=1;
 					
 					result_3 = listar_divisas_1(a,clnt);
@@ -496,6 +625,7 @@ case 3: //**************************************************MODULO LISTAR*******
 						
 						break;
 					case 2:
+          system(CLEAR);
 						*a=2;
 						result_3 = listar_divisas_1(a,clnt);
 						if (result_3 == (char **) NULL) {
@@ -506,6 +636,7 @@ case 3: //**************************************************MODULO LISTAR*******
 						
 						break;
 					case 3:
+          system(CLEAR);
 						*a=3;
 						result_3 = listar_divisas_1(a,clnt);
 						if (result_3 == (char **) NULL) {
@@ -520,7 +651,8 @@ case 3: //**************************************************MODULO LISTAR*******
 						
 						break;
 					default:
-						printf("opcion ingresada no valida\n");
+            system(CLEAR);
+						printf("Opcion ingresada no valida\n\n");
 						break;			
 					
 					
@@ -528,8 +660,8 @@ case 3: //**************************************************MODULO LISTAR*******
 
 				//Else de la validacion
 				}else{
-
-				printf("opcion ingresada no valida\n");	
+        system(CLEAR);
+        printf("Opcion ingresada no valida\n\n");
 				}
 
 			}while(op_origen!=4);
@@ -543,7 +675,7 @@ case 4: //****************MODULO LISTAR INFORMACION DE UNA MONEDA***************
 
 			
 			do{//Se muestra el menu de listar la informacion de un tipo de moneda
-				printf("Opcion Listar informacion sobre un tipo de moneda\n");
+				printf("\nOpcion Listar informacion sobre un tipo de moneda\n");
 				printf("=================================================\n");
 				printf("OPCIONES\n\n1)CLP\n2)USD\n3)EUR\n4)Volver\n===================\nSeleccione una opcion:\n");
 				fflush(stdin);
@@ -614,8 +746,8 @@ case 4: //****************MODULO LISTAR INFORMACION DE UNA MONEDA***************
 
 						//Else de la validacion
 						}else{
-
-						printf("opcion ingresada no valida\n");	
+            system(CLEAR);
+						printf("Opcion ingresada no valida\n\n\n\n");	
 						}
 
 
