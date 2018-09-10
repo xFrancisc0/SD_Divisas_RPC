@@ -6,13 +6,13 @@
 
 #include "cv_divisas.h"
 #include "funciones_server.h"
-int cant_glob=0;
+
 
 char **
 compra_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
-
+	printf("Se ha ingresado al servicio de compras\n");
 	char str[3], resultado[1000], resultado2[100];
 	int i;
 	
@@ -28,8 +28,7 @@ compra_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 	FILE * f2=fopen("./datos/sistema.txt","a+");
 		rescata_dinero(dinero_servidor,f2);  //Lleno el vector de dinero del servidor con los datos del almacen	
 		rescata_dinero(dinero_usuario,f);    //Lleno el vector de dinero del usuario con los datos del almacen	
-		printf("%i\n",cant_glob );
-		cant_glob++;
+
 		
 	fclose(f);
 	fclose(f2);
@@ -87,7 +86,7 @@ char **
 venta_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	static char * result;
-
+	printf("Se ha ingresado al servicio de ventas\n");
 	char str[3], resultado[1000], resultado2[100];
 	int i;
 
@@ -159,20 +158,21 @@ listar_divisas_1_svc(int *argp, struct svc_req *rqstp)
 	//recibe la opcion que puede ser 1,2 o 3
 	
 	static char * result;
+	printf("Se ha ingresado al servicio de listar divisas\n");
 	char ** resultado;
 	int a=*argp;
-	printf("%i\n",a);
+	//printf("%i\n",a);
 	if(a==1){		//con 1 listaremos los datos del usuario con la funcion listar_datos_usuario
 		resultado=listar_datos_usuario();
-		printf("1------>%i\n",a);
+		//printf("1------>%i\n",a);
 	}else{
 		if(a==2){//con 2 listaremos los datos del sistema con la funcion listar_datos_sistema
 			resultado=listar_datos_sistema();
-			printf("2------>%i\n",a);
+			//printf("2------>%i\n",a);
 		}else{
 			if(a==3){// con 3 llistaremos los cambios de divisas con la funcion imprime_datos_conversion
 				resultado=imprime_datos_conversion();
-				printf("3-------->%i\n",a);
+				//printf("3-------->%i\n",a);
 			}else{
 				//strcpy(resultado,"Vuelva a intentarlo!!!\n");
 			}
@@ -188,7 +188,7 @@ listardetalles_divisas_1_svc(struct CompraVenta *argp, struct svc_req *rqstp)
 {
 	
 	static char * result;
-
+	printf("Se ha ingresado al servicio de listar detalles de divisas\n");
 	char str[4];
 	char op[20];
 	char * *result_4;

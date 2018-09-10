@@ -21,7 +21,7 @@ int IsNaN_int (char str[]) {
    res = strtol(str, &ptr, 10); // str es el numero entero
    
    
-   if(strcmp(ptr, "")==0){ //ptr es el string
+   if(strcmp(ptr, "\n")==0){ //ptr es el string
    return(0);
    }
 
@@ -36,7 +36,7 @@ int IsNaN_float (char str[]) {
 
    res = strtod(str, &ptr); // str es el numero flotante
    
-   if(strcmp(ptr, "")==0){ //ptr es el string
+   if(strcmp(ptr, "\n")==0){ //ptr es el string
    return(0);
    }
 

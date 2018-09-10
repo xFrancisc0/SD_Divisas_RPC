@@ -19,7 +19,7 @@ void inicializar_struct(entidad en[]){
 void rescata_dinero(entidad ent[], FILE * f){
 	int i=0;
 	if(f==NULL){
-		printf("no existe el archivo");
+		//printf("no existe el archivo");
 	}else{
 		
 	 	while(fscanf(f,"%s %s\n",ent[i].tipo_moneda,ent[i].cantidad)!=EOF){
@@ -46,15 +46,15 @@ char** imprime_datos_conversion_filtrado(char tipo_moneda[]){
 
 	f=fopen("./datos/conversion.txt","a+");
 	
-	printf("======================================\nC O N V E R S I O N E S\n");
+	//printf("======================================\nC O N V E R S I O N E S\n");
 	strcpy(resultado, "======================================\nC O N V E R S I O N E S\n");
 
-	printf("======================================\n");
+	//printf("======================================\n");
 
 	char origen[4],destino[4],conversion[12];
 	while(fscanf(f,"%s %s %s\n",destino,origen,conversion)!=EOF){  //Mientras el archivo no se haya acabado de leer
 		if(strcmp(destino, tipo_moneda)==0){                       //Si la entrada de la funcion es igual al tipo de moneda leido en la linea
-		printf("1 %s corresponde a %s de la moneda %s\n",destino,conversion,origen); //Desplegar en pantalla su informacion acerca de su conversion con otros tipos de moneda.
+		//printf("1 %s corresponde a %s de la moneda %s\n",destino,conversion,origen); //Desplegar en pantalla su informacion acerca de su conversion con otros tipos de moneda.
 		
 		strcat(resultado, "1 ");
 		strcat(resultado, destino);
@@ -140,11 +140,11 @@ char** div_comprar( entidad * sistem,  entidad * user, char moneda_compra[], cha
 				}
 		//realizamos la  conversion de divisas		
 	conversion=cantidad*atof(tasa_cambio);
-	printf("Conversion == %f",conversion);
+	//printf("Conversion == %f",conversion);
 			fclose(conversor);
 			if(conversion<1){
 			strcpy(resultado,"La Tasa de cambio no es lo suficiente para realizar la transaccion\n");
-			printf("Conversion == %f",conversion);
+			//printf("Conversion == %f",conversion);
 			result=resultado;
 		return &result;	
 		}
